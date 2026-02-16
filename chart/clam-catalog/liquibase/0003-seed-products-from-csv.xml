@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+  <changeSet id="0003-seed-products" author="squidstack">
+    <preConditions onFail="MARK_RAN">
+      <tableExists schemaName="catalog" tableName="products"/>
+    </preConditions>
+    <loadData file="products.csv" separator="," tableName="products" schemaName="catalog" relativeToChangelogFile="false">
+      <column name="id" type="UUID"/>
+      <column name="name" type="STRING"/>
+      <column name="description" type="STRING"/>
+      <column name="price" type="NUMERIC"/>
+      <column name="primary_image_url" type="STRING"/>
+      <column name="images" type="STRING"/>
+      <column name="category" type="STRING"/>
+      <column name="sku" type="STRING"/>
+      <column name="stock_count" type="NUMERIC"/>
+      <column name="tags" type="STRING"/>
+      <column name="rating" type="NUMERIC"/>
+      <column name="review_count" type="NUMERIC"/>
+    </loadData>
+  </changeSet>
+
+</databaseChangeLog>

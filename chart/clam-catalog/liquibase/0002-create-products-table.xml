@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+  <changeSet id="0002-create-products-table" author="squidstack">
+    <createTable tableName="products" schemaName="catalog">
+      <column name="id" type="uuid">
+        <constraints primaryKey="true" primaryKeyName="pk_catalog_products" nullable="false"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="description" type="text"/>
+      <column name="price" type="numeric(10,2)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="primary_image_url" type="varchar(500)"/>
+      <column name="images" type="text[]"/>
+      <column name="category" type="varchar(100)"/>
+      <column name="sku" type="varchar(100)">
+        <constraints unique="true" uniqueConstraintName="uq_catalog_products_sku"/>
+      </column>
+      <column name="stock_count" type="integer" defaultValueNumeric="0"/>
+      <column name="tags" type="text[]"/>
+      <column name="rating" type="numeric(3,2)"/>
+      <column name="review_count" type="integer" defaultValueNumeric="0"/>
+      <column name="created_at" type="timestamptz" defaultValueComputed="now()"/>
+      <column name="updated_at" type="timestamptz" defaultValueComputed="now()"/>
+    </createTable>
+
+    <!-- Index for category searches -->
+    <createIndex indexName="idx_catalog_products_category" tableName="products" schemaName="catalog">
+      <column name="category"/>
+    </createIndex>
+
+    <!-- GIN index for tag searches using array containment operator @> -->
+    <sql>CREATE INDEX idx_catalog_products_tags ON catalog.products USING GIN (tags);</sql>
+  </changeSet>
+
+</databaseChangeLog>
