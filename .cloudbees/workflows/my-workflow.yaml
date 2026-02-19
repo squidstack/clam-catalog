@@ -31,7 +31,7 @@ jobs:
 
   build:
 
-    uses: github.com/squidstack/squidstack/.cloudbees/workflows/build-generic.yaml@feature/add-binary-upload
+    uses: github.com/squidstack/squidstack/.cloudbees/workflows/build-generic.yaml@main
     with:
       app_name: clam-catalog
       docker_user: ${{ vars.DOCKER_USER }}
