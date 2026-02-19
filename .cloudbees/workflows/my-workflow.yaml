@@ -30,8 +30,8 @@ jobs:
     vars: inherit
 
   build:
-   
-    uses: github.com/squidstack/squidstack/.cloudbees/workflows/build-generic.yaml@main
+
+    uses: github.com/squidstack/squidstack/.cloudbees/workflows/build-generic.yaml@feature/add-binary-upload
     with:
       app_name: clam-catalog
       docker_user: ${{ vars.DOCKER_USER }}
